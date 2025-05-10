@@ -21,3 +21,20 @@ Instalar y lanzar el proyecto con:
 ./mvnw spring-boot:run
 ```
 También se puede ejecutar el proyecto con la opción de ejecución de Intellij, en caso de usarse este IDE
+
+## Api first
+
+**Nota:** requiere tener instalado openapi-generator-cli
+
+Para la configuración de api first se genera un prices.yaml con la configuración necesaria, a continuación lanzo
+el comando:
+
+```shell
+openapi-generator-cli generate \
+  -i src/main/resources/openapi/prices-api.yaml \
+  -g spring \
+  -o generated-api \
+  --library spring-boot \
+  --additional-properties=interfaceOnly=true
+```
+

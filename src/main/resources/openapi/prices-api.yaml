@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Prices API
+  version: 1.0.0
+  description: An API to manage prices.
+
+paths:
+  /prices:
+    get:
+      summary: List prices
+      responses:
+        '200':
+          description: Prices Lists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Price'
+
+  /price/{date}/{product_id}/{brand_id}:
+    get:
+      summary: Get price by ID
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: brand_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Price found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        '404':
+          description: Price not found
+
+components:
+  schemas:
+    Price:
+      type: object
+      properties:
+        brand_id:
+          type: integer
+        start_date:
+          type: string
+        end_date:
+          type: string
+        price_list:
+          type: integer
+        product_id:
+          type: string
+        priority:
+          type: integer
+        price:
+          type: number
+        curr:
+          type: string
+      required:
+        - date
+        - brand_id
+        - product_id
