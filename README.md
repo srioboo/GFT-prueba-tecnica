@@ -23,14 +23,4 @@ Instalar y lanzar el proyecto con:
 ```
 También se puede ejecutar el proyecto con la opción de ejecución de Intellij, en caso de usarse este IDE
 
-## Api first
-
-Se añade al pom la configuración del plugin "openapi-generator-maven-plugin", 
-se ha incluido un prices-api.yaml en resources/openapi
-
-Para ejecutar la generación usar:
-
-```shell
-./mvnw clean compile
-```
 
