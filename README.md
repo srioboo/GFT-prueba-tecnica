@@ -2,11 +2,12 @@
 
 ## Elecciones del proyecto
 
-- Dado que los requisitos hablan de pom, uso maven en lugar de Gradle
-- He elegido java 21, dado que la 24 es demasiado reciente
-- para spring boot si he elegido la versión estable más reciente 3.4.5
-- se incluye en resorces el squema.sql y data.sql para insertar datos 
-  - no se ha solicitado liquibase o flyway así que no uso estos métodos
+- Java 21 (24 es muy reciente)
+- Spring boot 3.4.5
+- H2 en memoria tal como se indica en los requisitos, incluye en resorces el squema.sql y data.sql para insertar datos
+  - la consola de h2 es accesible desde http://localhost:8080/h2-console
+- Swagger-ui accesible desde http://localhost:8080/swagger-ui/index.html
+
 
 ## Lanzar la app
 
@@ -24,9 +25,10 @@ También se puede ejecutar el proyecto con la opción de ejecución de Intellij,
 
 ## Api first
 
-Se añade al pom la configuración del plugin "openapi-generator-maven-plugin"
+Se añade al pom la configuración del plugin "openapi-generator-maven-plugin", 
+se ha incluido un prices-api.yaml en resources/openapi
 
-Para ejecutar la generación usar
+Para ejecutar la generación usar:
 
 ```shell
 ./mvnw clean compile
