@@ -24,17 +24,11 @@ También se puede ejecutar el proyecto con la opción de ejecución de Intellij,
 
 ## Api first
 
-**Nota:** requiere tener instalado openapi-generator-cli
+Se añade al pom la configuración del plugin "openapi-generator-maven-plugin"
 
-Para la configuración de api first se genera un prices.yaml con la configuración necesaria, a continuación lanzo
-el comando:
+Para ejecutar la generación usar
 
 ```shell
-openapi-generator-cli generate \
-  -i src/main/resources/openapi/prices-api.yaml \
-  -g spring \
-  -o generated-api \
-  --library spring-boot \
-  --additional-properties=interfaceOnly=true
+./mvnw clean compile
 ```
 
