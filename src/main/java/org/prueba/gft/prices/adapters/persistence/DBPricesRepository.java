@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.adapters.repository;
+package org.prueba.gft.prices.adapters.persistence;
 
 import org.prueba.gft.prices.domain.Prices;
 import org.prueba.gft.prices.domain.PricesRepository;

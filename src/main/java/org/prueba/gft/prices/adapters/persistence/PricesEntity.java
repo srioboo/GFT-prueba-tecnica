@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.adapters.repository;
+package org.prueba.gft.prices.adapters.persistence;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

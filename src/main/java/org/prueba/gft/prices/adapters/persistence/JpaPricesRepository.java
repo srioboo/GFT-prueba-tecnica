@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.adapters.repository;
+package org.prueba.gft.prices.adapters.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
