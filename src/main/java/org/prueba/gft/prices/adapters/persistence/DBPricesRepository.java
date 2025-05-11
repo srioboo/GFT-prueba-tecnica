@@ -5,6 +5,7 @@ import org.prueba.gft.prices.domain.PricesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -22,9 +23,18 @@ public class DBPricesRepository implements PricesRepository {
 
     @Override
     public List<Prices> findAll() {
-        List<PricesEntity> pricesEntities = jpaPricesRepository.findAll();
-        return pricesEntities.stream()
-                .map(pricesEntityToPricesConverter::convert)
+        Iterable<PricesEntity> pricesEntities = jpaPricesRepository.findAll();
+        return ((List<PricesEntity>)pricesEntities).stream().map(pricesEntityToPricesConverter::convert)
                 .toList();
     }
+
+    @Override
+    public List<Prices> findByProductIdAndBrandIdAndDate(String productId,
+                                                         int brandId, LocalDateTime date) {
+        List<PricesEntity> pricesEntities = jpaPricesRepository
+                .findByProductIdAndBrandIdAndStartDate(productId, brandId, date);
+        return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList();
+    }
+
+
 }

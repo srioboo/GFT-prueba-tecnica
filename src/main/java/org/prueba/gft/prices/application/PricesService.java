@@ -4,6 +4,7 @@ import org.prueba.gft.prices.domain.Prices;
 import org.prueba.gft.prices.domain.PricesRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,5 +18,11 @@ public class PricesService {
 
     public List<Prices> findAll() {
         return pricesRepository.findAll();
+    }
+
+    public List<Prices> findByProductIdAndBrandIdAndDate(String productId,
+                                                         int brandId,
+                                                         LocalDateTime date) {
+        return pricesRepository.findByProductIdAndBrandIdAndDate(productId, brandId, date);
     }
 }
