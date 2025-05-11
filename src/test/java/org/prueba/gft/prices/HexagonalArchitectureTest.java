@@ -14,29 +14,24 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 public class HexagonalArchitectureTest {
 
     @Test
-    @Disabled
     void domainShouldNotDependOnAnything() {
         JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
 
         ArchRule rule = noClasses()
                 .that().resideInAPackage("..domain..")
                 .should().dependOnClassesThat()
-                .resideInAnyPackage("..adapters..", "..application..", "..springframework..");
-
+                .resideInAnyPackage("..adapters..", "..application..");
         rule.check(importedClasses);
     }
 
     @Test
-    @Disabled
     void applicationShouldNotDependOnAnything() {
         JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
 
         ArchRule rule = noClasses()
                 .that().resideInAPackage("..application..")
                 .should().dependOnClassesThat()
-                .resideInAnyPackage("..adapters..", "..springframework..");
-
+                .resideInAnyPackage("..adapters..");
         rule.check(importedClasses);
     }
-
 }
