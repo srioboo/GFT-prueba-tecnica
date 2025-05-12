@@ -23,6 +23,6 @@ public class PricesService {
 	public List<Prices> findByProductIdAndBrandIdAndDate(int productId,
 														 int brandId,
 														 LocalDateTime date) {
-		return pricesRepository.findByProductIdAndBrandIdAndDate(productId, brandId, date);
+		return pricesRepository.findByProductIdAndBrandIdAndStartDate(productId, brandId, date);
 	}
 }

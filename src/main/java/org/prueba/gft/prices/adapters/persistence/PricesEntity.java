@@ -14,14 +14,12 @@ import java.time.LocalDateTime;
 class PricesEntity {
 
 	@Id
-	private int productId;   // PRODUCT_ID  varchar(256),
-
-	private int priceList;      // PRICE_LIST  INTEGER,
-	private int brandId;     // BRAND_ID    INTEGER,
-	private LocalDateTime startDate;      // START_DATE  TIMESTAMP,
-	private LocalDateTime endDate;       // END_DATE    TIMESTAMP,
-	private int priority;       // PRIORITY    INTEGER,
-	private BigDecimal price;   // PRICE       DECIMAL,
-	private String curr;       // CURR        VARCHAR(3)
-
+	private int productId;
+	private int priceList;
+	private int brandId;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
+	private int priority;
+	private BigDecimal price;
+	private String curr;
 }
