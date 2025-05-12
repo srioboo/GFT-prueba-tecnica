@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 class PricesEntity {
 
     @Id
-    private String productId;   // PRODUCT_ID  varchar(256),
+    private int productId;   // PRODUCT_ID  varchar(256),
 
     private int priceList;      // PRICE_LIST  INTEGER,
     private int brandId;     // BRAND_ID    INTEGER,

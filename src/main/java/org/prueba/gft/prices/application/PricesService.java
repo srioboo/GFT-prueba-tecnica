@@ -20,7 +20,7 @@ public class PricesService {
         return pricesRepository.findAll();
     }
 
-    public List<Prices> findByProductIdAndBrandIdAndDate(String productId,
+    public List<Prices> findByProductIdAndBrandIdAndDate(int productId,
                                                          int brandId,
                                                          LocalDateTime date) {
         return pricesRepository.findByProductIdAndBrandIdAndDate(productId, brandId, date);

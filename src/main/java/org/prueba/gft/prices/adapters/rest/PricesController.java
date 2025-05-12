@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/")
@@ -35,21 +37,24 @@ public class PricesController {
     @GetMapping(path="/prices/product/{productId}/brand/{brandId}/date/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get list of prices given product ",
                 description = "Given brand id, product id and date get final price")
-    public ResponseEntity<String> getPricesByDateProductIdBrandId(
+    public ResponseEntity<List<Prices>> getPricesByDateProductIdBrandId(
             @PathParam("productId")
             @Parameter(name = "productId",
                     description = "Value of the product identifier", example = "35455")
-            String productId,
+            int productId,
             @PathParam("brandId")
             @Parameter(name = "brandId",
                     description = "Value of the brand identifier", example = "1")
             int brandId,
             @PathParam("date")
             @Parameter(name = "date",
-                    description = "Date to search for", example = "2020-06-14-00.00.00")
-            LocalDateTime date
+                    description = "Date to search for", example = "2020-06-14-15.00.00")
+            String date
     ) {
-        pricesService.findByProductIdAndBrandIdAndDate(productId, brandId, date);
-        return ResponseEntity.ok(pricesService.findAll().toString());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd-HH.mm.ss", Locale.of("ES", "ES"));
+        LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+        return ResponseEntity.ok(pricesService
+                .findByProductIdAndBrandIdAndDate(productId, brandId, localDateTime));
     }
 }

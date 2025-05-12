@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface JpaPricesRepository extends CrudRepository<PricesEntity, Long> {
-    List<PricesEntity> findByProductIdAndBrandIdAndStartDate(String productId, int brandId, LocalDateTime startDate);
+    List<PricesEntity> findByProductIdAndBrandIdAndStartDate(int productId, int brandId, LocalDateTime startDate);
 }

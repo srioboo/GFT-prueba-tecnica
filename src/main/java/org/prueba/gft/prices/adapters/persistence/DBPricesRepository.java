@@ -29,7 +29,7 @@ public class DBPricesRepository implements PricesRepository {
     }
 
     @Override
-    public List<Prices> findByProductIdAndBrandIdAndDate(String productId,
+    public List<Prices> findByProductIdAndBrandIdAndDate(int productId,
                                                          int brandId, LocalDateTime date) {
         List<PricesEntity> pricesEntities = jpaPricesRepository
                 .findByProductIdAndBrandIdAndStartDate(productId, brandId, date);

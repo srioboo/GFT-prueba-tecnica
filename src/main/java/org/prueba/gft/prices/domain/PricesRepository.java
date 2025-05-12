@@ -6,5 +6,5 @@ import java.util.List;
 public interface PricesRepository {
 
     List<Prices> findAll();
-    List<Prices> findByProductIdAndBrandIdAndDate(String productId, int brandId, LocalDateTime date);
+    List<Prices> findByProductIdAndBrandIdAndDate(int productId, int brandId, LocalDateTime date);
 }
