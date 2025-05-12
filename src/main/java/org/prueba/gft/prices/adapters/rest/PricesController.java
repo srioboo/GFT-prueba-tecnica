@@ -8,6 +8,7 @@ import org.prueba.gft.prices.domain.Prices;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,15 +38,15 @@ public class PricesController {
 	@Operation(summary = "Get list of prices given product ",
 		description = "Given brand id, product id and date get final price")
 	public ResponseEntity<List<Prices>> getPricesByDateProductIdBrandId(
-		@PathParam("productId")
+		@PathVariable("productId")
 		@Parameter(name = "productId",
 			description = "Value of the product identifier", example = "35455")
 		int productId,
-		@PathParam("brandId")
+		@PathVariable("brandId")
 		@Parameter(name = "brandId",
 			description = "Value of the brand identifier", example = "1")
 		int brandId,
-		@PathParam("date")
+		@PathVariable("date")
 		@Parameter(name = "date",
 			description = "Date to search for", example = "2020-06-14-15.00.00")
 		String date
