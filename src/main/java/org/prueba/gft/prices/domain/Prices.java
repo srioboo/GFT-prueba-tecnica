@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 @Builder
 public class Prices implements Serializable {
 
-    private int brandId;     // BRAND_ID    INTEGER,
-    private LocalDateTime starDate;      // START_DATE  TIMESTAMP,
-    private LocalDateTime endDate;       // END_DATE    TIMESTAMP,
-    private int priceList;      // PRICE_LIST  INTEGER,
-    private int productId;   // PRODUCT_ID  varchar(256),
-    private int priority;       // PRIORITY    INTEGER,
-    private BigDecimal price;   // PRICE       DECIMAL,
-    private String curr;       // CURR        VARCHAR(3)
+	private int brandId;     // BRAND_ID    INTEGER,
+	private LocalDateTime starDate;      // START_DATE  TIMESTAMP,
+	private LocalDateTime endDate;       // END_DATE    TIMESTAMP,
+	private int priceList;      // PRICE_LIST  INTEGER,
+	private int productId;   // PRODUCT_ID  varchar(256),
+	private int priority;       // PRIORITY    INTEGER,
+	private BigDecimal price;   // PRICE       DECIMAL,
+	private String curr;       // CURR        VARCHAR(3)
 }

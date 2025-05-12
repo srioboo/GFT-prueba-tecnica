@@ -10,19 +10,19 @@ import java.util.List;
 @Service
 public class PricesService {
 
-    private final PricesRepository pricesRepository;
+	private final PricesRepository pricesRepository;
 
-    public PricesService(PricesRepository pricesRepository) {
-        this.pricesRepository = pricesRepository;
-    }
+	public PricesService(PricesRepository pricesRepository) {
+		this.pricesRepository = pricesRepository;
+	}
 
-    public List<Prices> findAll() {
-        return pricesRepository.findAll();
-    }
+	public List<Prices> findAll() {
+		return pricesRepository.findAll();
+	}
 
-    public List<Prices> findByProductIdAndBrandIdAndDate(int productId,
-                                                         int brandId,
-                                                         LocalDateTime date) {
-        return pricesRepository.findByProductIdAndBrandIdAndDate(productId, brandId, date);
-    }
+	public List<Prices> findByProductIdAndBrandIdAndDate(int productId,
+														 int brandId,
+														 LocalDateTime date) {
+		return pricesRepository.findByProductIdAndBrandIdAndDate(productId, brandId, date);
+	}
 }
