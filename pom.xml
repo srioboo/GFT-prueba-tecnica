@@ -66,6 +66,11 @@
 			<version>1.4.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Spring boot devtools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
