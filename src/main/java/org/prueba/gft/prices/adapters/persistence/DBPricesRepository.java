@@ -25,29 +25,30 @@ public class DBPricesRepository implements PricesRepository {
 	public List<Prices> findAll() {
 		Iterable<PricesEntity> pricesEntities = jpaPricesRepository.findAll();
 		return ((List<PricesEntity>) pricesEntities).stream().map(pricesEntityToPricesConverter::convert)
-			.toList();
+				.toList();
 	}
 
 	@Override
 	public List<Prices> findByProductIdAndBrandIdAndStartDate(int productId,
 															  int brandId, LocalDateTime date) {
 		List<PricesEntity> pricesEntities = jpaPricesRepository
-			.findByProductIdAndBrandIdAndStartDate(productId, brandId, date);
+				.findByProductIdAndBrandIdAndStartDate(productId, brandId, date);
 		return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList();
 	}
 
 	@Override
 	public List<Prices> findByProductIdAndBrandIdAndStartDateAndEndDate(int productId, int brandId, LocalDateTime startDate, LocalDateTime endDate) {
 		List<PricesEntity> pricesEntities = jpaPricesRepository
-			.findByProductIdAndBrandIdAndStartDateAndEndDate(productId, brandId, startDate, endDate);
+				.findByProductIdAndBrandIdAndStartDateAndEndDate(productId, brandId, startDate, endDate);
 		return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList();
 	}
 
 	@Override
 	public List<Prices> findByProductIdAndBrandId(int productId, int brandId) {
 		List<PricesEntity> pricesEntities = jpaPricesRepository
-			.findByProductIdAndBrandId(productId, brandId);
+				.findByProductIdAndBrandId(productId, brandId);
 		return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList();
 	}
+
 
 }

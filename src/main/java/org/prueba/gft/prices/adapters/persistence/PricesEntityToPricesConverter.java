@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 public class PricesEntityToPricesConverter {
 	public Prices convert(PricesEntity pricesEntity) {
 		return Prices.builder()
-			.productId(pricesEntity.getProductId())
-			.price(pricesEntity.getPrice())
-			.brandId(pricesEntity.getBrandId())
-			.startDate(pricesEntity.getStartDate())
-			.endDate(pricesEntity.getEndDate())
-			.curr(pricesEntity.getCurr())
-			.priority(pricesEntity.getPriority())
-			.priceList(pricesEntity.getPriceList())
-			.build();
+				.productId(pricesEntity.getProductId())
+				.price(pricesEntity.getPrice())
+				.brandId(pricesEntity.getBrandId())
+				.startDate(pricesEntity.getStartDate())
+				.endDate(pricesEntity.getEndDate())
+				.curr(pricesEntity.getCurr())
+				.priority(pricesEntity.getPriority())
+				.priceList(pricesEntity.getPriceList())
+				.build();
 	}
 }
