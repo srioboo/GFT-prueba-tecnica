@@ -55,8 +55,8 @@ public class PricesController {
 			description = "End date", example = "2020-06-16-15.00.00")
 		String endDate
 	) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd-HH.mm.ss", Locale.of("ES", "ES"));
-
+		DateTimeFormatter formatter = DateTimeFormatter
+				.ofPattern("yyy-MM-dd-HH.mm.ss", Locale.of("ES", "ES"));
 		return ResponseEntity.status(HttpStatus.OK).body(pricesService
 			.findByProductIdAndBrandIdAndDate(productId, brandId, LocalDateTime.parse(startDate, formatter)));
 	}

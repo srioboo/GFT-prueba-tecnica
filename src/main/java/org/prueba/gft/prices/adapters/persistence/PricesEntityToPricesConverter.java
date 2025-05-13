@@ -10,7 +10,7 @@ public class PricesEntityToPricesConverter {
 			.productId(pricesEntity.getProductId())
 			.price(pricesEntity.getPrice())
 			.brandId(pricesEntity.getBrandId())
-			.starDate(pricesEntity.getStartDate())
+			.startDate(pricesEntity.getStartDate())
 			.endDate(pricesEntity.getEndDate())
 			.curr(pricesEntity.getCurr())
 			.priority(pricesEntity.getPriority())
