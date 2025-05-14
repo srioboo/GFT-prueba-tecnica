@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 class PricesEntity {
 
 	@Id
-	private int productId;
 	private int priceList;
+	private int productId;
 	private int brandId;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
