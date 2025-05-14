@@ -49,7 +49,7 @@ public class PricesController {
 		String date
 	) {
 		LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-		if (!date.isBlank())
+		if (date != null)
 			localDate = DateUtils.prepareDate(date);
 		return ResponseEntity.status(HttpStatus.OK).body(pricesService
 			.findByProductIdAndBrandIdByDate(productId, brandId, localDate));
