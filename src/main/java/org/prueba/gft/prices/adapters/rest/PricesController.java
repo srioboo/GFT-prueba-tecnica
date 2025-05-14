@@ -3,6 +3,7 @@ package org.prueba.gft.prices.adapters.rest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.prueba.gft.prices.application.PricesService;
+import org.prueba.gft.prices.common.DateUtils;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,9 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/")
@@ -26,35 +26,32 @@ public class PricesController {
 
 	@GetMapping(path = "/prices", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Get list of prices",
-			description = "Give al prices")
+		description = "Give al prices")
 	public ResponseEntity<List<Prices>> getPrices() {
 		return ResponseEntity.ok(pricesService.findAll());
 	}
 
 	@GetMapping(path = "/prices/brand/{brandId}/product/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Get list of prices given product ",
-			description = "Given brand id, product id and date get final price")
+		description = "Given brand id, product id and date get final price")
 	public ResponseEntity<List<Prices>> getPricesByDateProductIdBrandId(
-			@PathVariable("brandId")
-			@Parameter(name = "brandId",
-					description = "Value of the brand identifier", example = "1")
-			int brandId,
-			@PathVariable("productId")
-			@Parameter(name = "productId",
-					description = "Value of the product identifier", example = "35455")
-			int productId,
-			@RequestParam(name = "start-date", required = false)
-			@Parameter(name = "start-date",
-					description = "Start date", example = "2020-06-14-15.00.00")
-			String startDate,
-			@RequestParam(name = "end-date", required = false)
-			@Parameter(name = "end-date",
-					description = "End date", example = "2020-06-16-15.00.00")
-			String endDate
+		@PathVariable("brandId")
+		@Parameter(name = "brandId",
+			description = "Value of the brand identifier", example = "1")
+		int brandId,
+		@PathVariable("productId")
+		@Parameter(name = "productId",
+			description = "Value of the product identifier", example = "35455")
+		int productId,
+		@RequestParam(name = "date", required = false)
+		@Parameter(name = "date",
+			description = "Date", example = "2020-06-14-15.00.00")
+		String date
 	) {
-		DateTimeFormatter formatter = DateTimeFormatter
-				.ofPattern("yyy-MM-dd-HH.mm.ss", Locale.of("ES", "ES"));
+		LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+		if (!date.isBlank())
+			localDate = DateUtils.prepareDate(date);
 		return ResponseEntity.status(HttpStatus.OK).body(pricesService
-				.findByProductIdAndBrandIdAndDate(productId, brandId, LocalDateTime.parse(startDate, formatter)));
+			.findByProductIdAndBrandIdByDate(productId, brandId, localDate));
 	}
 }

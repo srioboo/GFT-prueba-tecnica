@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.math.RoundingMode;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,13 +42,13 @@ public class PricesRestAssuredTest {
 		assertThat(prices).isNotEmpty();
 
 		Prices price = prices.getFirst();
-		assertThat(price.getProductId()).isEqualTo(1);
-		assertThat(price.getBrandId()).isEqualTo(2);
+		assertThat(price.getProductId()).isEqualTo(35455);
+		assertThat(price.getBrandId()).isEqualTo(1);
 		assertThat(price.getPriority()).isEqualTo(1);
-		assertThat(price.getPrice()).isEqualTo(BigDecimal.valueOf(25.0));
+		assertThat(price.getPrice()).isEqualTo(BigDecimal.valueOf(25.0).setScale(1, RoundingMode.HALF_UP));
 		assertThat(price.getPriceList()).isEqualTo(1);
-		assertThat(price.getStartDate()).isEqualTo(LocalDateTime.of(2020, 1, 1, 0, 0, 0));
-		assertThat(price.getEndDate()).isEqualTo(LocalDateTime.of(2020, 12, 1, 0, 0, 0));
+		assertThat(price.getStartDate()).isEqualTo("2020-01-01-00.00.00");
+		assertThat(price.getEndDate()).isEqualTo("2020-01-01-00.00.00");
 		assertThat(price.getCurr()).isEqualTo("EUR");
 	}
 

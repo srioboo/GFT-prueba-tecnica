@@ -1,23 +1,19 @@
 package org.prueba.gft.prices.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Prices implements Serializable {
+public class Prices { // implements Serializable {
 
 	private int brandId;
-	private LocalDateTime startDate;
-	private LocalDateTime endDate;
+	private String startDate;
+	private String endDate;
 	private int priceList;
 	private int productId;
 	private int priority;

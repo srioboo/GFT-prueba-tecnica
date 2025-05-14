@@ -1,5 +1,6 @@
 package org.prueba.gft.prices.adapters.persistence;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,6 +21,8 @@ class PricesEntity {
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 	private int priority;
+
+	@Column(precision = 10, scale = 2)
 	private BigDecimal price;
 	private String curr;
 }

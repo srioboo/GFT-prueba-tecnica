@@ -10,15 +10,12 @@ import org.springframework.boot.test.json.ObjectContent;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
 public class PricesJsonTest {
-
-	private static final LocalDateTime testTime = LocalDateTime
-		.of(2020, 6, 16, 15, 0, 0);
+	private static final String testTime = "2020-06-16-15.00.00";
 
 	private static final Prices PRICES = new Prices(3, testTime,
 		testTime, 1, 35456, 1, BigDecimal.valueOf(38.95), "EUR");
@@ -26,8 +23,8 @@ public class PricesJsonTest {
 	private static final String JSON_PRICE = """
 		{
 			"brandId": 3,
-			"startDate": "2020-06-16T15:00:00",
-			"endDate": "2020-06-16T15:00:00",
+			"startDate": "2020-06-16-15.00.00",
+			"endDate": "2020-06-16-15.00.00",
 			"priceList": 1,
 			"productId": 35456,
 			"priority": 1,

@@ -20,9 +20,9 @@ public class PricesService {
 		return pricesRepository.findAll();
 	}
 
-	public List<Prices> findByProductIdAndBrandIdAndDate(int productId,
-														 int brandId,
-														 LocalDateTime date) {
-		return pricesRepository.findByProductIdAndBrandIdAndStartDate(productId, brandId, date);
+	public List<Prices> findByProductIdAndBrandIdByDate(int productId,
+														int brandId,
+														LocalDateTime date) {
+		return pricesRepository.findByProductIdAndBrandIdByDate(productId, brandId, date);
 	}
 }
