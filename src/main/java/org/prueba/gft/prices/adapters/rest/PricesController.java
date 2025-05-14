@@ -45,7 +45,7 @@ public class PricesController {
 		int productId,
 		@RequestParam(name = "date", required = false)
 		@Parameter(name = "date",
-			description = "Date", example = "2020-06-14-15.00.00")
+			description = "Date: search for given date o if null for current date", example = "2020-06-14-15.00.00")
 		String date
 	) {
 		LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
