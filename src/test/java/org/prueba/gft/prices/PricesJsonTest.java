@@ -1,5 +1,6 @@
 package org.prueba.gft.prices;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,30 +16,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
 public class PricesJsonTest {
-	private static final String testTime = "2020-06-16-15.00.00";
 
-	private static final Prices PRICES = new Prices(3, testTime,
-		testTime, 1, 35456, 1, BigDecimal.valueOf(38.95), "EUR");
-
-	private static final String JSON_PRICE = """
-		{
-			"brandId": 3,
-			"startDate": "2020-06-16-15.00.00",
-			"endDate": "2020-06-16-15.00.00",
-			"priceList": 1,
-			"productId": 35456,
-			"priority": 1,
-			"price": 38.95,
-			"curr": "EUR"
-		  }
-		""";
+	private static final String JSON_PATH = "/json/prices.json";
+	private Prices price;
+	private ObjectContent<Prices> jsonContent;
 
 	@Autowired
 	private JacksonTester<Prices> json;
 
+	@BeforeEach
+	void setUp() throws IOException {
+		String testTime = "2020-06-16-15.00.00";
+		price = new Prices(3, testTime,
+			testTime, 1, 35456, 1, BigDecimal.valueOf(38.95), "EUR");
+		jsonContent = json.read(getClass().getResourceAsStream(JSON_PATH));
+	}
+
 	@Test
 	void serializesToJson() throws IOException {
-		JsonContent<Prices> jsonContent = json.write(PRICES);
+		JsonContent<Prices> jsonContent = json.write(price);
 
 		assertThat(jsonContent).hasJsonPathNumberValue("@.brandId");
 		assertThat(jsonContent).hasJsonPathStringValue("@.startDate");
@@ -51,19 +47,17 @@ public class PricesJsonTest {
 	}
 
 	@Test
-	void deserializesFromJson() throws IOException {
-		ObjectContent<Prices> jsonContent = json.parse(JSON_PRICE);
+	void deserializesFromJson() {
+		Prices jsonPrice = jsonContent.getObject();
+		assertThat(jsonPrice).isNotNull();
 
-		assertThat(jsonContent).isNotNull();
-		assertThat(jsonContent).isEqualTo(PRICES);
-
-		Prices price = json.parseObject(JSON_PRICE);
-		assertThat(price.getBrandId()).isEqualTo(3);
-		assertThat(price.getStartDate()).isEqualTo(testTime);
-		assertThat(price.getEndDate()).isEqualTo(testTime);
-		assertThat(price.getPriceList()).isEqualTo(1);
-		assertThat(price.getProductId()).isEqualTo(35456);
-		assertThat(price.getPriority()).isEqualTo(1);
-		assertThat(price.getPrice()).isEqualTo(BigDecimal.valueOf(38.95));
+		assertThat(price.getBrandId()).isEqualTo(jsonPrice.getBrandId());
+		assertThat(price.getStartDate()).isEqualTo(jsonPrice.getStartDate());
+		assertThat(price.getEndDate()).isEqualTo(jsonPrice.getEndDate());
+		assertThat(price.getPriceList()).isEqualTo(jsonPrice.getPriceList());
+		assertThat(price.getProductId()).isEqualTo(jsonPrice.getProductId());
+		assertThat(price.getPriority()).isEqualTo(jsonPrice.getPriority());
+		assertThat(price.getPrice()).isEqualTo(jsonPrice.getPrice());
+		assertThat(price.getCurr()).isEqualTo(jsonPrice.getCurr());
 	}
 }

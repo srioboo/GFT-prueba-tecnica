@@ -1,34 +1,42 @@
 package org.prueba.gft.prices;
 
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.json.ObjectContent;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PricesRestTest {
-
-	private static final LocalDateTime startTime = LocalDateTime
-		.of(2020, 6, 14, 15, 0, 0);
-
-	private static final LocalDateTime endTime = LocalDateTime
-		.of(2020, 6, 14, 18, 30, 0);
+	
+	private static final String JSON_PATH = "/json/prices.json";
+	private ObjectContent<Prices> jsonContent;
+	private JacksonTester<Prices> jsonTester;
 
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@BeforeEach
+	public void setUp() throws IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		JacksonTester.initFields(this, objectMapper);
+		jsonContent = jsonTester.read(getClass().getResourceAsStream(JSON_PATH));
+	}
+
 	@Test
-	void getAllPrices() throws Exception {
+	void getAllPrices() {
 		ResponseEntity<Prices[]> response = restTemplate
 			.getForEntity("/prices", Prices[].class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -45,17 +53,18 @@ public class PricesRestTest {
 		ResponseEntity<Prices[]> response = restTemplate
 			.getForEntity("/prices/brand/1/product/35455?start-date=2020-06-14-15.00.00&end-date=2020-06-16-15.00.00", Prices[].class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
 		Prices[] prices = response.getBody();
+		Prices jsonPrice = jsonContent.getObject();
+
 		assertThat(prices).isNotNull();
 		for (Prices price : prices) {
-			assertThat(price.getBrandId()).isEqualTo(1);
-			assertThat(price.getStartDate()).isEqualTo(startTime);
-			assertThat(price.getEndDate()).isEqualTo(endTime);
-			assertThat(price.getPriceList()).isEqualTo(2);
-			assertThat(price.getProductId()).isEqualTo(35455);
-			assertThat(price.getPriority()).isEqualTo(1);
-			assertThat(price.getPrice()).isEqualTo(BigDecimal.valueOf(25));
+			assertThat(price.getBrandId()).isEqualTo(jsonPrice.getBrandId());
+			assertThat(price.getStartDate()).isEqualTo(jsonPrice.getStartDate());
+			assertThat(price.getEndDate()).isEqualTo(jsonPrice.getEndDate());
+			assertThat(price.getPriceList()).isEqualTo(jsonPrice.getPriceList());
+			assertThat(price.getProductId()).isEqualTo(jsonPrice.getProductId());
+			assertThat(price.getPriority()).isEqualTo(jsonPrice.getPriority());
+			assertThat(price.getPrice()).isEqualTo(jsonPrice.getPrice());
 		}
 	}
 }

@@ -1,29 +1,39 @@
 package org.prueba.gft.prices;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.prueba.gft.prices.domain.Prices;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.json.ObjectContent;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PricesRestAssuredTest {
+
+	private static final String JSON_PATH = "/json/prices-first.json";
+	private ObjectContent<Prices> jsonContent;
+	private JacksonTester<Prices> jsonTester;
 
 	@LocalServerPort
 	private int port;
 
 	@BeforeEach
-	public void setUp() {
+	public void setUp() throws IOException {
 		RestAssured.port = port;
+		ObjectMapper objectMapper = new ObjectMapper();
+		JacksonTester.initFields(this, objectMapper);
+		jsonContent = jsonTester.read(getClass().getResourceAsStream(JSON_PATH));
 	}
 
 	@Test
@@ -38,22 +48,21 @@ public class PricesRestAssuredTest {
 			.body()
 			.jsonPath()
 			.getList("$", Prices.class);
-
 		assertThat(prices).isNotEmpty();
-
+		Prices jsonPrice = jsonContent.getObject();
 		Prices price = prices.getFirst();
-		assertThat(price.getProductId()).isEqualTo(35455);
-		assertThat(price.getBrandId()).isEqualTo(1);
-		assertThat(price.getPriority()).isEqualTo(1);
-		assertThat(price.getPrice()).isEqualTo(BigDecimal.valueOf(25.0).setScale(1, RoundingMode.HALF_UP));
-		assertThat(price.getPriceList()).isEqualTo(1);
-		assertThat(price.getStartDate()).isEqualTo("2020-01-01-00.00.00");
-		assertThat(price.getEndDate()).isEqualTo("2020-01-01-00.00.00");
-		assertThat(price.getCurr()).isEqualTo("EUR");
+		assertThat(price.getProductId()).isEqualTo(jsonPrice.getProductId());
+		assertThat(price.getBrandId()).isEqualTo(jsonPrice.getBrandId());
+		assertThat(price.getPriority()).isEqualTo(jsonPrice.getPriority());
+		assertThat(price.getPrice()).isEqualTo(jsonPrice.getPrice());
+		assertThat(price.getPriceList()).isEqualTo(jsonPrice.getPriceList());
+		assertThat(price.getStartDate()).isEqualTo(jsonPrice.getStartDate());
+		assertThat(price.getEndDate()).isEqualTo(jsonPrice.getEndDate());
+		assertThat(price.getCurr()).isEqualTo(jsonPrice.getCurr());
 	}
 
 	@Test
 	void shouldGetPriceById() {
-
+		// TODO - more tests
 	}
 }
