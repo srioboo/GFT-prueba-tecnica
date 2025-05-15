@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Prices { // implements Serializable {
+public class Prices {
 
 	private int brandId;
 	private String startDate;
