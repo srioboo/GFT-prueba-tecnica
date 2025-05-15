@@ -36,14 +36,14 @@ class PricesJsonTest {
 	void serializesToJson() throws IOException {
 		JsonContent<Prices> jsonPricesContent = json.write(price);
 
-		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.brandId");
-		assertThat(jsonPricesContent).hasJsonPathStringValue("@.startDate");
-		assertThat(jsonPricesContent).hasJsonPathStringValue("@.endDate");
-		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.priceList");
-		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.productId");
-		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.priority");
-		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.price");
-		assertThat(jsonPricesContent).hasJsonPathStringValue("@.curr");
+		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.brandId")
+			.hasJsonPathStringValue("@.startDate")
+			.hasJsonPathStringValue("@.endDate")
+			.hasJsonPathNumberValue("@.priceList")
+			.hasJsonPathNumberValue("@.productId")
+			.hasJsonPathNumberValue("@.priority")
+			.hasJsonPathNumberValue("@.price")
+			.hasJsonPathStringValue("@.curr");
 	}
 
 	@Test
