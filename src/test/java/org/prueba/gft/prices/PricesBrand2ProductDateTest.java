@@ -49,7 +49,7 @@ public class PricesBrand2ProductDateTest {
 		Prices prices = RestAssured.given()
 			.contentType(ContentType.JSON)
 			.when()
-			.get("/prices/brand/2/product/35454?date=2020-06-14-16.00.00")
+			.get("/prices/brand/2/product/35454?date=2020-06-14-15.00.00")
 			.then()
 			.statusCode(200)
 			.extract()
