@@ -72,3 +72,11 @@ Para ejecutarla, lanzar:
 ```shell
 docker-compose up --build
 ```
+
+La aplicación debe desplegarse en el puerto 9090
+
+```shell
+# se puede lanzar el rest de prices desde
+
+http://localhost:9090/prices
+```
