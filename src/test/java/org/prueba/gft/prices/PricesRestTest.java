@@ -1,5 +1,6 @@
 package org.prueba.gft.prices;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ class PricesRestTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@DisplayName("Endpoint prices return a list of object Prices not null")
 	@Test
 	void getAllPrices() {
 		ResponseEntity<Prices[]> response = restTemplate

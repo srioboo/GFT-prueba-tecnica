@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -35,7 +36,8 @@ class PricesRestAssuredTest {
 		JacksonTester.initFields(this, objectMapper);
 		jsonContent = jsonTester.read(getClass().getResourceAsStream(JSON_PATH));
 	}
-
+	
+	@DisplayName("Endpoint prices return a list of object and first Prices Object data equals to prices-first.json example")
 	@Test
 	void shouldGetAllPrices() {
 		List<Prices> prices = RestAssured.given()

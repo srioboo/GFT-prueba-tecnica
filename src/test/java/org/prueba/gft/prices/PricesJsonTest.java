@@ -1,6 +1,7 @@
 package org.prueba.gft.prices;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ class PricesJsonTest {
 		jsonContent = json.read(getClass().getResourceAsStream(JSON_PATH));
 	}
 
+	@DisplayName("The Json structure is correct")
 	@Test
 	void serializesToJson() throws IOException {
 		JsonContent<Prices> jsonPricesContent = json.write(price);
@@ -46,6 +48,7 @@ class PricesJsonTest {
 			.hasJsonPathStringValue("@.curr");
 	}
 
+	@DisplayName("Json values are correct")
 	@Test
 	void deserializesFromJson() {
 		Prices jsonPrice = jsonContent.getObject();

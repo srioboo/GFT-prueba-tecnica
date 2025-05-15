@@ -4,6 +4,7 @@ import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.lang.ArchRule;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
@@ -12,6 +13,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 @AnalyzeClasses(packages = "org.prueba.gft")
 class HexagonalArchitectureTest {
 
+	@DisplayName("Test domain layer dependencies")
 	@Test
 	void domainShouldNotDependOnAnything() {
 		JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
@@ -23,6 +25,7 @@ class HexagonalArchitectureTest {
 		rule.check(importedClasses);
 	}
 
+	@DisplayName("Test application layer dependencies")
 	@Test
 	void applicationShouldNotDependOnAnything() {
 		JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
