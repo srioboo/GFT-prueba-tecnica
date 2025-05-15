@@ -61,3 +61,14 @@ Test incluidos:
 # Para "refrescar" las dependencias
 ./mvnw clean install
 ```
+
+## Despliegue de la aplicación con docker
+
+Para mostrar la utilización de docker, se ha creado un dockerfile que construye la aplicación y crea una imagen,
+además se ha creado un docker-compose para desplegar la aplicación en un docker
+
+Para ejecutarla, lanzar:
+
+```shell
+docker-compose up --build
+```
