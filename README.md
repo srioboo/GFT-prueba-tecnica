@@ -4,8 +4,8 @@
 
 - Java 21 y Spring boot 3.4.5
 - H2 en memoria tal como se indica en los requisitos, incluye en resorces el squema.sql y data.sql para insertar datos
-	- la consola de h2 es accesible desde http://localhost:8080/h2-console (regla en application.properties)
-- Swagger-ui accesible desde http://localhost:8080/swagger-ui/index.html (regla en application.properties)
+	- la consola de h2 es accesible desde http://localhost:8080/h2-console (user y pass en application.properties)
+- Swagger-ui accesible desde http://localhost:8080/swagger-ui/index.html (activación en application.properties)
 - ArchUnit: librería de testing para arquitectura
 - .editorconfig: con algunas reglas para tener un código uniforme, estas reglas solo funcionan en IDES compatibles o
   si se ha instalado el plugin correspondiente
