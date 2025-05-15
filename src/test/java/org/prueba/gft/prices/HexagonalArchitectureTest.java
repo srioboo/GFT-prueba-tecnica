@@ -10,27 +10,27 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 
 @AnalyzeClasses(packages = "org.prueba.gft")
-public class HexagonalArchitectureTest {
+class HexagonalArchitectureTest {
 
-    @Test
-    void domainShouldNotDependOnAnything() {
-        JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
+	@Test
+	void domainShouldNotDependOnAnything() {
+		JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
 
-        ArchRule rule = noClasses()
-                .that().resideInAPackage("..domain..")
-                .should().dependOnClassesThat()
-                .resideInAnyPackage("..adapters..", "..application..");
-        rule.check(importedClasses);
-    }
+		ArchRule rule = noClasses()
+			.that().resideInAPackage("..domain..")
+			.should().dependOnClassesThat()
+			.resideInAnyPackage("..adapters..", "..application..");
+		rule.check(importedClasses);
+	}
 
-    @Test
-    void applicationShouldNotDependOnAnything() {
-        JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
+	@Test
+	void applicationShouldNotDependOnAnything() {
+		JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
 
-        ArchRule rule = noClasses()
-                .that().resideInAPackage("..application..")
-                .should().dependOnClassesThat()
-                .resideInAnyPackage("..adapters..");
-        rule.check(importedClasses);
-    }
+		ArchRule rule = noClasses()
+			.that().resideInAPackage("..application..")
+			.should().dependOnClassesThat()
+			.resideInAnyPackage("..adapters..");
+		rule.check(importedClasses);
+	}
 }

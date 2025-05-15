@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PricesRestAssuredTest {
+class PricesRestAssuredTest {
 
 	private static final String JSON_PATH = "/json/prices-first.json";
 	private ObjectContent<Prices> jsonContent;
@@ -29,7 +29,7 @@ public class PricesRestAssuredTest {
 	private int port;
 
 	@BeforeEach
-	public void setUp() throws IOException {
+	void setUp() throws IOException {
 		RestAssured.port = port;
 		ObjectMapper objectMapper = new ObjectMapper();
 		JacksonTester.initFields(this, objectMapper);
@@ -39,15 +39,15 @@ public class PricesRestAssuredTest {
 	@Test
 	void shouldGetAllPrices() {
 		List<Prices> prices = RestAssured.given()
-				.contentType(ContentType.JSON)
-				.when()
-				.get("/prices")
-				.then()
-				.statusCode(200)
-				.extract()
-				.body()
-				.jsonPath()
-				.getList("$", Prices.class);
+			.contentType(ContentType.JSON)
+			.when()
+			.get("/prices")
+			.then()
+			.statusCode(200)
+			.extract()
+			.body()
+			.jsonPath()
+			.getList("$", Prices.class);
 		assertThat(prices).isNotEmpty();
 		Prices jsonPrice = jsonContent.getObject();
 		Prices price = prices.getFirst();

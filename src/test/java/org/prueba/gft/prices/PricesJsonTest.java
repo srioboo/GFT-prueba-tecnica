@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
-public class PricesJsonTest {
+class PricesJsonTest {
 
 	private static final String JSON_PATH = "/json/prices.json";
 	private Prices price;
@@ -34,16 +34,16 @@ public class PricesJsonTest {
 
 	@Test
 	void serializesToJson() throws IOException {
-		JsonContent<Prices> jsonContent = json.write(price);
+		JsonContent<Prices> jsonPricesContent = json.write(price);
 
-		assertThat(jsonContent).hasJsonPathNumberValue("@.brandId");
-		assertThat(jsonContent).hasJsonPathStringValue("@.startDate");
-		assertThat(jsonContent).hasJsonPathStringValue("@.endDate");
-		assertThat(jsonContent).hasJsonPathNumberValue("@.priceList");
-		assertThat(jsonContent).hasJsonPathNumberValue("@.productId");
-		assertThat(jsonContent).hasJsonPathNumberValue("@.priority");
-		assertThat(jsonContent).hasJsonPathNumberValue("@.price");
-		assertThat(jsonContent).hasJsonPathStringValue("@.curr");
+		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.brandId");
+		assertThat(jsonPricesContent).hasJsonPathStringValue("@.startDate");
+		assertThat(jsonPricesContent).hasJsonPathStringValue("@.endDate");
+		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.priceList");
+		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.productId");
+		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.priority");
+		assertThat(jsonPricesContent).hasJsonPathNumberValue("@.price");
+		assertThat(jsonPricesContent).hasJsonPathStringValue("@.curr");
 	}
 
 	@Test

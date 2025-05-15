@@ -17,13 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PricesBrand1ProductDateTest {
+class PricesBrand1ProductDateTest {
 
 	@LocalServerPort
 	private int port;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		RestAssured.port = port;
 	}
 

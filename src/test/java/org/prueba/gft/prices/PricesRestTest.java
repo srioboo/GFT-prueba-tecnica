@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PricesRestTest {
+class PricesRestTest {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
