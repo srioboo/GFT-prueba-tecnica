@@ -34,7 +34,7 @@ public class PricesController {
 	@GetMapping(path = "/prices/brand/{brandId}/product/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Get list of prices given product ",
 		description = "Given brand id, product id and date get final price")
-	public ResponseEntity<List<Prices>> getPricesByDateProductIdBrandId(
+	public ResponseEntity<Prices> getPricesByDateProductIdBrandId(
 		@PathVariable("brandId")
 		@Parameter(name = "brandId",
 			description = "Value of the brand identifier", example = "1")
