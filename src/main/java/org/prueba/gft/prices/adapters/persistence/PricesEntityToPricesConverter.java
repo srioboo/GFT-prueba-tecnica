@@ -1,6 +1,6 @@
 package org.prueba.gft.prices.adapters.persistence;
 
-import org.prueba.gft.prices.common.DateUtils;
+import org.prueba.gft.prices.application.DateUtils;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.stereotype.Service;
 

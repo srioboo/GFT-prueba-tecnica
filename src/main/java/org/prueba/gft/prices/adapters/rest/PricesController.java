@@ -2,8 +2,8 @@ package org.prueba.gft.prices.adapters.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.prueba.gft.prices.application.DateUtils;
 import org.prueba.gft.prices.application.PricesService;
-import org.prueba.gft.prices.common.DateUtils;
 import org.prueba.gft.prices.domain.Prices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

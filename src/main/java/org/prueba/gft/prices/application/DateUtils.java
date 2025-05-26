@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.common;
+package org.prueba.gft.prices.application;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
