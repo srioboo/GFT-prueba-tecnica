@@ -3,8 +3,8 @@ package org.prueba.gft.prices.adapters.rest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.prueba.gft.prices.application.DateUtils;
-import org.prueba.gft.prices.application.PricesService;
 import org.prueba.gft.prices.domain.model.Prices;
+import org.prueba.gft.prices.domain.service.PricesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -24,13 +23,6 @@ public class PricesController {
 	public PricesController(PricesService pricesService, DateUtils dateUtils) {
 		this.pricesService = pricesService;
 		this.dateUtils = dateUtils;
-	}
-
-	@GetMapping(path = "/prices", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(summary = "Get list of prices",
-		description = "Give al prices")
-	public ResponseEntity<List<Prices>> getPrices() {
-		return ResponseEntity.ok(pricesService.findAll());
 	}
 
 	@GetMapping(path = "/prices/brand/{brandId}/product/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
