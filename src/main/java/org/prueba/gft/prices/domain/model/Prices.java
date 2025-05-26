@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.domain;
+package org.prueba.gft.prices.domain.model;
 
 import lombok.*;
 

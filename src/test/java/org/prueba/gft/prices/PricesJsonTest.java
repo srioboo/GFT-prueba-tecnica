@@ -3,7 +3,7 @@ package org.prueba.gft.prices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.prueba.gft.prices.domain.Prices;
+import org.prueba.gft.prices.domain.model.Prices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;

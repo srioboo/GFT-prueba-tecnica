@@ -1,7 +1,7 @@
 package org.prueba.gft.prices.application;
 
-import org.prueba.gft.prices.domain.Prices;
-import org.prueba.gft.prices.domain.PricesRepository;
+import org.prueba.gft.prices.domain.model.Prices;
+import org.prueba.gft.prices.domain.repository.PricesRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

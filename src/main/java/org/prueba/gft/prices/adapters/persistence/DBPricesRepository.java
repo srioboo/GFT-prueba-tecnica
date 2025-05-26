@@ -1,7 +1,7 @@
 package org.prueba.gft.prices.adapters.persistence;
 
-import org.prueba.gft.prices.domain.Prices;
-import org.prueba.gft.prices.domain.PricesRepository;
+import org.prueba.gft.prices.domain.model.Prices;
+import org.prueba.gft.prices.domain.repository.PricesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,5 +34,5 @@ public class DBPricesRepository implements PricesRepository {
 			.findByProductIdAndBrandIdByDate(productId, brandId, date);
 		return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList();
 	}
-	
+
 }
