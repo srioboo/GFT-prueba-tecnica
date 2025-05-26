@@ -14,6 +14,13 @@
 
 ## Lanzar la app
 
+El path de entrada para probar la app es http://localhost:8080/prices/brand/{brandId}/product/{productId}?date={date}
+
+```shell
+# ejemplo
+http://localhost:8080/prices/brand/1/product/35455?date=2020-06-14-10.00.00
+```
+
 Se ha añadido el wrapper de maven (mvnw), para que se pueda gestionar el proyecto. Se puede usar mvn en caso de estar
 instalado en el sistema.
 
