@@ -19,9 +19,11 @@ import java.util.List;
 public class PricesController {
 
 	private final PricesService pricesService;
+	private final DateUtils dateUtils;
 
-	public PricesController(PricesService pricesService) {
+	public PricesController(PricesService pricesService, DateUtils dateUtils) {
 		this.pricesService = pricesService;
+		this.dateUtils = dateUtils;
 	}
 
 	@GetMapping(path = "/prices", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,7 +52,7 @@ public class PricesController {
 	) {
 		LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 		if (date != null)
-			localDate = DateUtils.prepareDate(date);
+			localDate = dateUtils.prepareDate(date);
 		return ResponseEntity.status(HttpStatus.OK).body(pricesService
 			.findByProductIdAndBrandIdByDate(productId, brandId, localDate));
 	}
