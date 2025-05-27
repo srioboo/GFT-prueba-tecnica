@@ -98,3 +98,11 @@ Para ejecutar la generación usar:
 ```shell  
 ./mvnw clean compile
 ```
+
+## Troubleshooting
+
+Si mapsstruct no funciona (¿posible incompatibilidad con apifirst?)
+
+```shell
+./mvnw clean install -DskipTests
+```
