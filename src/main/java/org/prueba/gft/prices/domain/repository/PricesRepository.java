@@ -6,8 +6,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PricesRepository {
-
-	List<Prices> findAll();
-
 	List<Prices> findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date);
 }

@@ -14,13 +14,12 @@ import org.springframework.boot.test.json.ObjectContent;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class PricesRestAssuredTest {
+class PriceRestAssuredTest {
 
 	private static final String JSON_PATH = "/json/prices-first.json";
 	private ObjectContent<Prices> jsonContent;
@@ -37,22 +36,18 @@ class PricesRestAssuredTest {
 		jsonContent = jsonTester.read(getClass().getResourceAsStream(JSON_PATH));
 	}
 
-	@DisplayName("Endpoint prices return a list of object and first Prices Object data equals to prices-first.json example")
+	@DisplayName("Endpoint prices return a Price Object data equals to prices-first.json example")
 	@Test
-	void shouldGetAllPrices() {
-		List<Prices> prices = RestAssured.given()
+	void shouldGetPrice() {
+		Prices price = RestAssured.given()
 			.contentType(ContentType.JSON)
 			.when()
-			.get("/prices")
+			.get("/prices/brand/1/product/35455?date=2020-06-14-10.00.00")
 			.then()
 			.statusCode(200)
 			.extract()
-			.body()
-			.jsonPath()
-			.getList("$", Prices.class);
-		assertThat(prices).isNotEmpty();
+			.as(Prices.class);
 		Prices jsonPrice = jsonContent.getObject();
-		Prices price = prices.getFirst();
 		assertThat(price.getProductId()).isEqualTo(jsonPrice.getProductId());
 		assertThat(price.getBrandId()).isEqualTo(jsonPrice.getBrandId());
 		assertThat(price.getPriority()).isEqualTo(jsonPrice.getPriority());
