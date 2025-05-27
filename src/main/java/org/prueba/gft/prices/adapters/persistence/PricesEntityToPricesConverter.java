@@ -15,6 +15,11 @@ public class PricesEntityToPricesConverter {
 	private final DateUtils dateUtils;
 
 	public Prices convert(PricesEntity pricesEntity) {
+
+		// TODO - PriceMapper priceMapper = PriceMapper.INSTANCE;
+		// Prices prices = new Prices();
+		// priceMapper.pricesDTOToPrices(prices);
+		
 		return Prices.builder()
 			.productId(pricesEntity.getProductId())
 			.price((pricesEntity.getPrice()).setScale(2, RoundingMode.UNNECESSARY))

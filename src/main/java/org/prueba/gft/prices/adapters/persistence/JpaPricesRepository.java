@@ -11,8 +11,9 @@ import java.util.List;
 public interface JpaPricesRepository extends JpaRepository<PricesEntity, Long> {
 
 	@Query(value = "SELECT p FROM PricesEntity p " +
-		"WHERE p.productId = ?1 " +
-		"and p.brandId = ?2 " +
-		"and (p.startDate <= ?3 and p.endDate > ?3)")
+		"WHERE p.brandId = ?2 " +
+		"AND p.productId = ?1 " +
+		"AND (p.startDate <= ?3 AND p.endDate > ?3) " +
+		"ORDER BY p.priority desc LIMIT 1")
 	List<PricesEntity> findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date);
 }

@@ -20,12 +20,12 @@ public class DBPricesRepository implements PricesRepository {
 		this.jpaPricesRepository = jpaPricesRepository;
 		this.pricesEntityToPricesConverter = pricesEntityToPricesConverter;
 	}
-	
+
 	@Override
-	public List<Prices> findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date) {
+	public Prices findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date) {
 		List<PricesEntity> pricesEntities = jpaPricesRepository
 			.findByProductIdAndBrandIdByDate(productId, brandId, date);
-		return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList();
+		return pricesEntities.stream().map(pricesEntityToPricesConverter::convert).toList().getFirst();
 	}
 
 }
