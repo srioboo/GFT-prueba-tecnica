@@ -1,74 +1,71 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
-  title: Prices API
-  version: 1.0.0
-  description: An API to manage prices.
-
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
 paths:
-  /prices:
+  /prices/brand/{brandId}/product/{productId}:
     get:
-      summary: List prices
-      responses:
-        '200':
-          description: Prices Lists
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Price'
-
-  /price/{date}/{product_id}/{brand_id}:
-    get:
-      summary: Get price by ID
+      tags:
+        - prices-controller
+      summary: 'Get list of prices given product '
+      description: "Given brand id, product id and date get final price"
+      operationId: getPricesByDateProductIdBrandId
       parameters:
-        - name: date
+        - name: brandId
           in: path
+          description: Value of the brand identifier
           required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: productId
+          in: path
+          description: Value of the product identifier
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 35455
+        - name: date
+          in: query
+          description: "Date: search for given date o if null for current date"
+          required: false
           schema:
             type: string
-        - name: product_id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: brand_id
-          in: path
-          required: true
-          schema:
-            type: integer
+          example: 2020-06-14-15.00.00
       responses:
-        '200':
-          description: Price found
+        "200":
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Price'
-        '404':
-          description: Price not found
-
+                $ref: "#/components/schemas/PricesDTO"
 components:
   schemas:
-    Price:
+    PricesDTO:
       type: object
       properties:
-        brand_id:
+        brandId:
           type: integer
-        start_date:
+          format: int32
+        startDate:
           type: string
-        end_date:
+        endDate:
           type: string
-        price_list:
+        priceList:
           type: integer
-        product_id:
-          type: string
+          format: int32
+        productId:
+          type: integer
+          format: int32
         priority:
           type: integer
+          format: int32
         price:
           type: number
         curr:
           type: string
-      required:
-        - date
-        - brand_id
-        - product_id

@@ -87,3 +87,14 @@ La aplicación debe desplegarse en el puerto 9090
 
 http://localhost:9090/prices
 ```
+
+## ApiFirst
+
+Se añade al pom la configuración del plugin "openapi-generator-maven-plugin",
+se ha incluido un prices-api.yaml en resources/openapi
+
+Para ejecutar la generación usar:
+
+```shell  
+./mvnw clean compile
+```
