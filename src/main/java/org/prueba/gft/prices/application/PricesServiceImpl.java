@@ -1,5 +1,6 @@
 package org.prueba.gft.prices.application;
 
+import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.repository.PricesRepository;
 import org.prueba.gft.prices.domain.service.PricesService;
@@ -19,7 +20,7 @@ public class PricesServiceImpl implements PricesService {
 
 	public Prices findByProductIdAndBrandIdByDate(int productId,
 												  int brandId,
-												  LocalDateTime date) {
+												  LocalDateTime date) throws PriceNotFoundException {
 
 		Prices prices = pricesRepository.findByProductIdAndBrandIdByDate(productId, brandId, date);
 		Optional<Prices> opPrice = Optional.ofNullable(prices);
