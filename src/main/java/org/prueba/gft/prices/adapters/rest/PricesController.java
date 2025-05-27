@@ -2,9 +2,13 @@ package org.prueba.gft.prices.adapters.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.AllArgsConstructor;
 import org.prueba.gft.prices.application.DateUtils;
+import org.prueba.gft.prices.domain.dto.PricesDTO;
+import org.prueba.gft.prices.domain.mapper.PriceMapper;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.service.PricesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +19,16 @@ import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequestMapping("/")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PricesController {
 
 	private final PricesService pricesService;
 	private final DateUtils dateUtils;
-
-	public PricesController(PricesService pricesService, DateUtils dateUtils) {
-		this.pricesService = pricesService;
-		this.dateUtils = dateUtils;
-	}
-
+	
 	@GetMapping(path = "/prices/brand/{brandId}/product/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Get list of prices given product ",
 		description = "Given brand id, product id and date get final price")
-	public ResponseEntity<Prices> getPricesByDateProductIdBrandId(
+	public ResponseEntity<PricesDTO> getPricesByDateProductIdBrandId(
 		@PathVariable("brandId")
 		@Parameter(name = "brandId",
 			description = "Value of the brand identifier", example = "1")
@@ -42,10 +42,12 @@ public class PricesController {
 			description = "Date: search for given date o if null for current date", example = "2020-06-14-15.00.00")
 		String date
 	) {
+		// TODO - ERRORS check
 		LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 		if (date != null)
 			localDate = dateUtils.prepareDate(date);
-		return ResponseEntity.status(HttpStatus.OK).body(pricesService
-			.findByProductIdAndBrandIdByDate(productId, brandId, localDate));
+		Prices price = pricesService
+			.findByProductIdAndBrandIdByDate(productId, brandId, localDate);
+		return ResponseEntity.status(HttpStatus.OK).body(PriceMapper.INSTANCE.toDTO(price));
 	}
 }
