@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.domain.mapper;
+package org.prueba.gft.prices.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

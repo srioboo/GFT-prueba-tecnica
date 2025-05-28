@@ -2,38 +2,38 @@ package org.prueba.gft.prices;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
-import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 
 @AnalyzeClasses(packages = "org.prueba.gft")
 class HexagonalArchitectureTest {
 
+	private final JavaClasses importedClasses = new ClassFileImporter()
+		.withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
+		.importPackages("org.prueba.gft");
+
 	@DisplayName("Test domain layer dependencies")
 	@Test
 	void domainShouldNotDependOnAnything() {
-		JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
-
-		ArchRule rule = noClasses()
+		ArchRuleDefinition.noClasses()
 			.that().resideInAPackage("..domain..")
 			.should().dependOnClassesThat()
-			.resideInAnyPackage("..adapters..", "..application..");
-		rule.check(importedClasses);
+			.resideInAnyPackage("..adapters..", "..application..", "..mapper..")
+
+			.check(importedClasses);
 	}
 
 	@DisplayName("Test application layer dependencies")
 	@Test
 	void applicationShouldNotDependOnAnything() {
-		JavaClasses importedClasses = new ClassFileImporter().importPackages("org.prueba.gft");
-
-		ArchRule rule = noClasses()
+		ArchRuleDefinition.noClasses()
 			.that().resideInAPackage("..application..")
 			.should().dependOnClassesThat()
-			.resideInAnyPackage("..adapters..");
-		rule.check(importedClasses);
+			.resideInAnyPackage("..adapters..", "..mapper..")
+			.check(importedClasses);
 	}
 }

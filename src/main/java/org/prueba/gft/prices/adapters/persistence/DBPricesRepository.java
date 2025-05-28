@@ -1,9 +1,9 @@
 package org.prueba.gft.prices.adapters.persistence;
 
-import org.prueba.gft.prices.domain.mapper.PriceMapper;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.repository.PricesRepository;
+import org.prueba.gft.prices.mapper.PriceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
