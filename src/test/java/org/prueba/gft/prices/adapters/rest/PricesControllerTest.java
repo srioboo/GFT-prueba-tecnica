@@ -24,15 +24,16 @@ class PricesControllerTest {
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 
-		prices = new Prices();
-		prices.setProductId(1);
-		prices.setBrandId(1);
-		prices.setProductId(54333);
-		prices.setCurr("EUR");
-		prices.setPriceList(1);
-		prices.setPriority(1);
-		prices.setStartDate("2020-06-14-10.00.00");
-		prices.setEndDate("2020-06-15-10.00.00");
+		prices = Prices.builder()
+			.productId(1)
+			.brandId(1)
+			.productId(54333)
+			.curr("EUR")
+			.priceList(1)
+			.priority(1)
+			.startDate("2020-06-14-10.00.00")
+			.endDate("2020-06-15-10.00.00")
+			.build();
 	}
 
 	@Test
