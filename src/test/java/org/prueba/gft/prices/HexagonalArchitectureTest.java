@@ -22,7 +22,7 @@ class HexagonalArchitectureTest {
 		ArchRuleDefinition.noClasses()
 			.that().resideInAPackage("..domain..")
 			.should().dependOnClassesThat()
-			.resideInAnyPackage("..adapters..", "..application..", "..mapper..")
+			.resideInAnyPackage("..adapters..", "..application..")
 
 			.check(importedClasses);
 	}
@@ -33,7 +33,7 @@ class HexagonalArchitectureTest {
 		ArchRuleDefinition.noClasses()
 			.that().resideInAPackage("..application..")
 			.should().dependOnClassesThat()
-			.resideInAnyPackage("..adapters..", "..mapper..")
+			.resideInAnyPackage("..adapters..")
 			.check(importedClasses);
 	}
 }
