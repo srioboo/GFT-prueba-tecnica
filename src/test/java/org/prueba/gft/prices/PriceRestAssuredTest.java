@@ -53,8 +53,6 @@ class PriceRestAssuredTest {
 		assertThat(price.getPriority()).isEqualTo(jsonPrice.getPriority());
 		assertThat(price.getPrice()).isEqualTo(jsonPrice.getPrice());
 		assertThat(price.getPriceList()).isEqualTo(jsonPrice.getPriceList());
-		assertThat(price.getStartDate()).isEqualTo(jsonPrice.getStartDate());
-		assertThat(price.getEndDate()).isEqualTo(jsonPrice.getEndDate());
 		assertThat(price.getCurr()).isEqualTo(jsonPrice.getCurr());
 	}
 

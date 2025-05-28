@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 
 @AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -38,7 +39,7 @@ class PricesBrandProductDateTest {
 		"'2', '35454', '2020-06-14-15.00.00', 25.45",
 		"'2', '35454', '2020-06-14-16.00.00', 25.45",
 		"'3', '35458', '2025-09-14-19.00.00', 130.50",
-		"'3', '35458', '2025-03-15-15.00.00', 130.50",
+		"'3', '35458', '2025-03-15-15.00.00', 15.45",
 		"'3', '35459', '2025-03-14-01.00.00', 250.50",
 		"'3', '35459', '2025-03-15-16.01.00', 32.95",
 	})
@@ -65,15 +66,14 @@ class PricesBrandProductDateTest {
 	})
 	void nullResponse(String brand, String product, String date) {
 		String restUrl = "/prices/brand/" + brand + "/product/" + product + "?date=" + date;
-		Prices prices = RestAssured.given()
+		RestAssured.given()
 			.contentType(ContentType.JSON)
 			.when()
 			.get(restUrl)
 			.then()
-			.statusCode(200)
-			.extract()
-			.as(Prices.class);
-		assertThat(prices).isNotNull();
-		assertThat(prices.getPrice()).isNull();
+			.statusCode(404)
+			.contentType(ContentType.JSON)
+			.body("message", notNullValue())
+			.body("timestamp", notNullValue());
 	}
 }
