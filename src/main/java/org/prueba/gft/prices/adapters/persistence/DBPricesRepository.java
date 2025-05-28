@@ -1,7 +1,6 @@
 package org.prueba.gft.prices.adapters.persistence;
 
 import lombok.AllArgsConstructor;
-import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.repository.PricesRepository;
 import org.prueba.gft.prices.mapper.PriceMapper;
@@ -15,13 +14,12 @@ import java.util.List;
 public class DBPricesRepository implements PricesRepository {
 
 	private final JpaPricesRepository jpaPricesRepository;
-	
+
 	@Override
-	public Prices findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date) throws PriceNotFoundException {
+	public Prices findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date) {
 		List<PricesEntity> pricesEntities = jpaPricesRepository
-			.findByProductIdAndBrandIdByDate(productId, brandId, date);
-		if (pricesEntities.isEmpty())
-			throw new PriceNotFoundException("not found");
+			.findByProductIdAndBrandIdByDate(productId, brandId, date)
+			.stream().toList();
 		return pricesEntities.stream().map(PriceMapper.INSTANCE::toDomain).toList().getFirst();
 	}
 

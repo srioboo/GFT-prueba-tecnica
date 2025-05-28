@@ -21,7 +21,6 @@ public class PricesServiceImpl implements PricesService {
 												  LocalDateTime date) throws PriceNotFoundException {
 
 		Prices prices = pricesRepository.findByProductIdAndBrandIdByDate(productId, brandId, date);
-		Optional<Prices> opPrice = Optional.ofNullable(prices);
-		return opPrice.orElse(new Prices());
+		return Optional.ofNullable(prices).orElseThrow(() -> new PriceNotFoundException("Price not found"));
 	}
 }
