@@ -1,4 +1,4 @@
-package org.prueba.gft.prices.domain.dto;
+package org.prueba.gft.prices.adapters.rest;
 
 import lombok.*;
 

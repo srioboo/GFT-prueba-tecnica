@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.prueba.gft.prices.application.DateUtils;
-import org.prueba.gft.prices.domain.dto.PricesDTO;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.service.PricesService;
