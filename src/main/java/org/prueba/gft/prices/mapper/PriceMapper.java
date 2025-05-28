@@ -12,9 +12,5 @@ public interface PriceMapper {
 
 	Prices toDomain(PricesEntity pricesEntity);
 
-	PricesEntity toEntity(Prices prices);
-
 	PricesDTO toDTO(Prices prices);
-
-	Prices fromDTO(PricesDTO pricesDTO);
 }

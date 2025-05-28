@@ -1,5 +1,6 @@
 package org.prueba.gft.prices.application;
 
+import lombok.AllArgsConstructor;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.repository.PricesRepository;
@@ -10,13 +11,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PricesServiceImpl implements PricesService {
 
 	private final PricesRepository pricesRepository;
-
-	public PricesServiceImpl(PricesRepository pricesRepository) {
-		this.pricesRepository = pricesRepository;
-	}
 
 	public Prices findByProductIdAndBrandIdByDate(int productId,
 												  int brandId,
