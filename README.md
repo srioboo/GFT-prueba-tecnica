@@ -88,6 +88,15 @@ La aplicación debe desplegarse en el puerto 9090
 http://localhost:9090/prices
 ```
 
+Otros puntos de entrada, son la consola h2 y el swagger-ui
+
+```shell
+# consola h2
+http://localhost:8080/h2-console
+# Swagger-ui 
+http://localhost:8080/swagger-ui/index.html
+```
+
 ## ApiFirst
 
 Se añade al pom la configuración del plugin "openapi-generator-maven-plugin",
