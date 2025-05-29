@@ -1,9 +1,7 @@
 package org.prueba.gft.prices;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.prueba.gft.prices.adapters.persistence.DBPricesRepository;
-import org.prueba.gft.prices.domain.model.Prices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +13,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.math.BigDecimal;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@DisplayName("Integration Test with container")
 @Testcontainers
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,26 +41,7 @@ class PriceControllerIntegrationTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Autowired
-	private DBPricesRepository dbPricesRepository;
-
-	private Prices prices;
-
-	@BeforeEach
-	void setUp() {
-
-		prices = Prices.builder()
-			.brandId(1)
-			.productId(55555)
-			.price(BigDecimal.valueOf(34.50))
-			.priceList(1)
-			.priority(1)
-			.curr("EUR")
-			.startDate("")
-			.endDate("")
-			.build();
-	}
-
+	@DisplayName("Test failed getting price")
 	@Test
 	void shouldFailReturnPriceForValidRequest() throws Exception {
 		mockMvc.perform(get("/prices/brand/1/product/35455")

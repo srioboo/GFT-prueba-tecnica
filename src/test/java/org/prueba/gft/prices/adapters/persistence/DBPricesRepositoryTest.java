@@ -3,28 +3,36 @@ package org.prueba.gft.prices.adapters.persistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.prueba.gft.prices.application.PricesServiceImpl;
+import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
+import org.prueba.gft.prices.domain.repository.PricesRepository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class DBPricesRepositoryTest {
 
+	@Mock
+	private PricesRepository pricesRepository;
+
 	@InjectMocks
-	private DBPricesRepository dbPricesRepository;
+	private PricesServiceImpl pricesService;
 
 	private Prices mockPrices;
 
 	@BeforeEach
 	void setUp() {
-		dbPricesRepository = Mockito.mock(DBPricesRepository.class);
 		mockPrices = Prices.builder()
 				.productId(1)
 				.brandId(1)
@@ -38,9 +46,21 @@ class DBPricesRepositoryTest {
 
 	@DisplayName("Test find product")
 	@Test
-	void findByProductIdAndBrandIdByDate() {
-		when(dbPricesRepository.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any(LocalDateTime.class)))
+	void findByProductIdAndBrandIdByDate() throws PriceNotFoundException {
+		Mockito.when(pricesRepository.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any(LocalDateTime.class)))
 				.thenReturn(Optional.ofNullable(mockPrices));
+		Prices price = pricesService.findByProductIdAndBrandIdByDate(54333, 1, LocalDateTime.now());
 		assertNotNull(mockPrices);
+		assertEquals(mockPrices, price);
+	}
+
+	@DisplayName("Test product not found")
+	@Test
+	void handlePriceNotFound() {
+		Mockito.when(pricesRepository.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any()))
+				.thenReturn(Optional.empty());
+		assertThrows(PriceNotFoundException.class, () -> {
+			pricesService.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any(LocalDateTime.class));
+		});
 	}
 }

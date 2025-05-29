@@ -5,8 +5,4 @@ public class PriceNotFoundException extends Exception {
 	public PriceNotFoundException() {
 		super("Price not found Exception");
 	}
-
-	public PriceNotFoundException(String message) {
-		super(message);
-	}
 }
