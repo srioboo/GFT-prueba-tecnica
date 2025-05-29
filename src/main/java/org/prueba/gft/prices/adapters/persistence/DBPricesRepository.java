@@ -7,7 +7,7 @@ import org.prueba.gft.prices.mapper.PriceMapper;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -16,11 +16,9 @@ public class DBPricesRepository implements PricesRepository {
 	private final JpaPricesRepository jpaPricesRepository;
 
 	@Override
-	public Prices findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date) {
-		List<PricesEntity> pricesEntities = jpaPricesRepository
-			.findByProductIdAndBrandIdByDate(productId, brandId, date)
-			.stream().toList();
-		return pricesEntities.stream().map(PriceMapper.INSTANCE::toDomain).toList().getFirst();
+	public Optional<Prices> findByProductIdAndBrandIdByDate(int productId, int brandId, LocalDateTime date) {
+		return Optional.ofNullable(PriceMapper.INSTANCE.toDomain(
+			jpaPricesRepository.findByProductIdAndBrandIdByDate(productId, brandId, date)));
 	}
 
 }

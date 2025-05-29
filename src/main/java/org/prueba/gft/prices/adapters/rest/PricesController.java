@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.prueba.gft.prices.application.DateUtils;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
-import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.service.PricesService;
 import org.prueba.gft.prices.mapper.PriceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -24,6 +25,9 @@ import java.util.Map;
 @RequestMapping("/")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PricesController {
+
+	private static final String DATE_FORMAT = "yyyy-MM-dd-HH.mm.ss";
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT, Locale.of("ES", "ES"));
 
 	private final PricesService pricesService;
 	private final DateUtils dateUtils;
@@ -55,14 +59,11 @@ public class PricesController {
 	) throws PriceNotFoundException {
 		LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 		if (date != null)
-			localDate = dateUtils.prepareDate(date);
-		Prices price = new Prices();
-		try {
-			price = pricesService
-				.findByProductIdAndBrandIdByDate(productId, brandId, localDate);
-		} catch (Exception ex) {
-			throw new PriceNotFoundException("Price Not found");
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(PriceMapper.INSTANCE.toDTO(price));
+			localDate = LocalDateTime.parse(date, FORMATTER);
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(PriceMapper.INSTANCE
+				.toDTO(pricesService
+					.findByProductIdAndBrandIdByDate(productId, brandId, localDate)));
 	}
 }

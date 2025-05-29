@@ -8,7 +8,6 @@ import org.prueba.gft.prices.domain.service.PricesService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public class PricesServiceImpl implements PricesService {
 												  int brandId,
 												  LocalDateTime date) throws PriceNotFoundException {
 
-		Prices prices = pricesRepository.findByProductIdAndBrandIdByDate(productId, brandId, date);
-		return Optional.ofNullable(prices).orElseThrow(() -> new PriceNotFoundException("Price not found"));
+		return pricesRepository.findByProductIdAndBrandIdByDate(productId, brandId, date)
+			.orElseThrow(PriceNotFoundException::new);
 	}
 }
