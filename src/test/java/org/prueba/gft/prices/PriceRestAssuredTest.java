@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.ObjectContent;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class PriceRestAssuredTest {
 
 	private static final String JSON_PATH = "/json/prices-first.json";
