@@ -3,7 +3,6 @@ package org.prueba.gft.prices.adapters.rest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
-import org.prueba.gft.prices.application.DateUtils;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.service.PricesService;
 import org.prueba.gft.prices.mapper.PriceMapper;
@@ -30,7 +29,6 @@ public class PricesController {
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT, Locale.of("ES", "ES"));
 
 	private final PricesService pricesService;
-	private final DateUtils dateUtils;
 
 	@ExceptionHandler(PriceNotFoundException.class)
 	public ResponseEntity<Map<String, Object>> handlePriceNotFound(PriceNotFoundException ex) {
