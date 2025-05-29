@@ -1,56 +1,39 @@
 package org.prueba.gft.prices.adapters.rest;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.prueba.gft.prices.application.PricesServiceImpl;
 import org.prueba.gft.prices.domain.model.DateFormatIncorrectException;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
-import org.prueba.gft.prices.domain.model.Prices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class PricesControllerTest {
 
+	public static final String START_DATE = "2020-06-14-10.00.00";
+	public static final String END_DATE = "2020-06-15-10.00.00";
+	public static final String WRONG_DATE = "2020-0614 10.00.00";
+	public static final String DATE = "2020-06-14-16.00.00";
+
 	@InjectMocks
-	PricesController pricesController;
+	private PricesController pricesController;
 
-	@Mock
-	PricesServiceImpl pricesService;
+	@Autowired
+	private MockMvc mockMvc;
 
-	Prices prices;
-	PricesDTO pricesDTO;
+	private AutoCloseable autoCloseable;
 
 	@BeforeEach
 	void setUp() {
-		MockitoAnnotations.openMocks(this);
-
-		prices = Prices.builder()
-			.brandId(1)
-			.productId(54333)
-			.curr("EUR")
-			.priceList(1)
-			.priority(1)
-			.startDate("2020-06-14-10.00.00")
-			.endDate("2020-06-15-10.00.00")
-			.build();
-
-		pricesDTO = PricesDTO.builder()
-			.brandId(2)
-			.productId(54335)
-			.curr("EUR")
-			.priceList(1)
-			.priority(1)
-			.startDate("2020-06-14-10.00.00")
-			.endDate("2020-06-15-10.00.00")
-			.build();
+		autoCloseable = MockitoAnnotations.openMocks(this);
 	}
 
 	@DisplayName("Test incorrect Date")
@@ -63,10 +46,17 @@ class PricesControllerTest {
 
 	@DisplayName("Test price not found")
 	@Test
-	@Disabled
-	void handlePriceNotFound() {
-		assertThrows(PriceNotFoundException.class, () -> {
-			pricesController.getPricesByDateProductIdBrandId(1, 1, "2020-06-14-10.00.00");
-		});
+	void handlePriceNotFound() throws Exception {
+		mockMvc.perform(get("/prices/brand/1/product/35455")
+				.param("date", "2025-06-14-15.00.00"))
+			.andExpect(status().isNotFound())
+			.andExpect(result -> Assertions.assertTrue(result
+				.getResolvedException() instanceof PriceNotFoundException));
+
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+		autoCloseable.close();
 	}
 }
