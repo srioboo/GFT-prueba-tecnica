@@ -12,6 +12,7 @@ import org.prueba.gft.prices.application.PricesServiceImpl;
 import org.prueba.gft.prices.domain.model.PriceNotFoundException;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.prueba.gft.prices.domain.repository.PricesRepository;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class DBPricesRepositoryTest {
 
 	@Mock
@@ -34,21 +36,21 @@ class DBPricesRepositoryTest {
 	@BeforeEach
 	void setUp() {
 		mockPrices = Prices.builder()
-				.productId(1)
-				.brandId(1)
-				.productId(54333)
-				.curr("EUR")
-				.priceList(1)
-				.priority(1)
-				.startDate("2020-06-14-10.00.00")
-				.endDate("2020-06-15-10.00.00").build();
+			.productId(1)
+			.brandId(1)
+			.productId(54333)
+			.curr("EUR")
+			.priceList(1)
+			.priority(1)
+			.startDate("2020-06-14-10.00.00")
+			.endDate("2020-06-15-10.00.00").build();
 	}
 
 	@DisplayName("Test find product")
 	@Test
 	void findByProductIdAndBrandIdByDate() throws PriceNotFoundException {
 		Mockito.when(pricesRepository.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any(LocalDateTime.class)))
-				.thenReturn(Optional.ofNullable(mockPrices));
+			.thenReturn(Optional.ofNullable(mockPrices));
 		Prices price = pricesService.findByProductIdAndBrandIdByDate(54333, 1, LocalDateTime.now());
 		assertNotNull(mockPrices);
 		assertEquals(mockPrices, price);
@@ -58,7 +60,7 @@ class DBPricesRepositoryTest {
 	@Test
 	void handlePriceNotFound() {
 		Mockito.when(pricesRepository.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any()))
-				.thenReturn(Optional.empty());
+			.thenReturn(Optional.empty());
 		assertThrows(PriceNotFoundException.class, () -> {
 			pricesService.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any(LocalDateTime.class));
 		});
