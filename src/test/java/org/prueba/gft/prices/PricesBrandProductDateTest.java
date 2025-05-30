@@ -1,65 +1,69 @@
 package org.prueba.gft.prices;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.prueba.gft.prices.domain.model.Prices;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.json.ObjectContent;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
-@AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureJsonTesters
+@ActiveProfiles("test")
 class PricesBrandProductDateTest {
+
+	private static final String JSON_PATH = "/json/prices-first.json";
+	private ObjectContent<Prices> jsonContent;
+	private JacksonTester<Prices> jsonTester;
 
 	@LocalServerPort
 	private int port;
 
 	@BeforeEach
-	void setUp() {
+	void setUp() throws IOException {
 		RestAssured.port = port;
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		JacksonTester.initFields(this, objectMapper);
+		jsonContent = jsonTester.read(getClass().getResourceAsStream(JSON_PATH));
 	}
 
-	@ParameterizedTest(name = "{index} - at date {2} product {1} brand {0} is {3}")
-	@CsvSource({
-		"'1', '35455', '2020-06-14-10.00.00', 35.50",
-		"'1', '35455', '2020-06-14-16.00.00', 25.45",
-		"'1', '35455', '2020-06-14-21.00.00', 35.50",
-		"'1', '35455', '2020-06-15-10.00.00', 30.50",
-		"'1', '35455', '2020-06-16-21.00.00', 38.95",
-		"'2', '35454', '2020-06-14-10.00.00', 35.50",
-		"'2', '35454', '2020-06-14-15.00.00', 25.45",
-		"'2', '35454', '2020-06-14-16.00.00', 25.45",
-		"'3', '35458', '2025-09-14-19.00.00', 130.50",
-		"'3', '35458', '2025-03-15-15.00.00', 15.45",
-		"'3', '35459', '2025-03-14-01.00.00', 250.50",
-		"'3', '35459', '2025-03-15-16.01.00', 32.95",
-	})
-	void shouldGetPriceByBrandProductIdAndDate(String brand, String product, String date, BigDecimal price) {
-		String restUrl = "/prices/brand/" + brand + "/product/" + product + "?date=" + date;
-		Prices prices = RestAssured.given()
+	@DisplayName("Endpoint prices return a Price Object data equals to prices-first.json example")
+	@Sql(scripts = {"classpath:data.sql"})
+	@Test
+	void shouldGetPrice() {
+		Prices price = RestAssured.given()
 			.contentType(ContentType.JSON)
 			.when()
-			.get(restUrl)
+			.get("/prices/brand/1/product/35455?date=2020-06-14-10.00.00")
 			.then()
 			.statusCode(200)
-			.extract()
-			.as(Prices.class);
-		assertThat(prices).isNotNull();
-		assertThat(prices.getPrice()).isEqualTo(price
-			.setScale(2, RoundingMode.UNNECESSARY));
+			.extract().as(Prices.class);
+		Prices jsonPrice = jsonContent.getObject();
+		assertThat(price.getProductId()).isEqualTo(jsonPrice.getProductId());
+		assertThat(price.getBrandId()).isEqualTo(jsonPrice.getBrandId());
+		assertThat(price.getPriority()).isEqualTo(jsonPrice.getPriority());
+		assertThat(price.getPrice()).isEqualTo(jsonPrice.getPrice());
+		assertThat(price.getPriceList()).isEqualTo(jsonPrice.getPriceList());
+		assertThat(price.getCurr()).isEqualTo(jsonPrice.getCurr());
 	}
 
-
-	@ParameterizedTest(name = "{index} - there are not prices for {1} at date {2} for brand {0}")
+	@ParameterizedTest(name = "{index} - THERE ARE NOT PRICES for {1} at date {2} for brand {0}")
 	@CsvSource({
 		"'3', '10009', '2025-03-15-16.01.00'",
 		"'4', '35459', '2025-03-15-16.01.00'",
