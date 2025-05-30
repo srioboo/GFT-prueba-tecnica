@@ -24,9 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class PricesControllerTest {
-
-	public static final String START_DATE = "2020-06-14-10.00.00";
-	public static final String END_DATE = "2020-06-15-10.00.00";
+	
 	public static final String WRONG_DATE = "2020-0614 10.00.00";
 	public static final String DATE = "2020-06-14-16.00.00";
 
@@ -50,7 +48,7 @@ class PricesControllerTest {
 	@Test
 	void handleIncorrectDateFound() {
 		assertThrows(DateFormatIncorrectException.class, () -> {
-			pricesController.getPricesByDateProductIdBrandId(1, 1, "2020-06-14-10.00.00   ");
+			pricesController.getPricesByDateProductIdBrandId(1, 1, WRONG_DATE);
 		});
 	}
 
@@ -60,7 +58,7 @@ class PricesControllerTest {
 		Mockito.when(pricesService.findByProductIdAndBrandIdByDate(anyInt(), anyInt(), any()))
 			.thenThrow(PriceNotFoundException.class);
 		mockMvc.perform(get("/prices/brand/1/product/35455")
-				.param("date", "2025-06-14-15.00.00"))
+				.param("date", DATE))
 			.andExpect(status().isNotFound())
 			.andExpect(result -> Assertions.assertTrue(result
 				.getResolvedException() instanceof PriceNotFoundException));
