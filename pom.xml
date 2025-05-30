@@ -162,10 +162,10 @@
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/openapi/prices-api.yaml</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>org.prueba.gft.prices.openapi.api</apiPackage>
-							<modelPackage>org.prueba.gft.prices.openapi.model</modelPackage>
+							<apiPackage>org.prueba.gft.prices.adapters.api</apiPackage>
+							<modelPackage>org.prueba.gft.prices.adapters.model</modelPackage>
 							<library>spring-boot</library>
-							<output>src/gen/main/gen/openapi</output>
+							<output>src/gen</output>
 							<configOptions>
 								<useSpringBoot3>true</useSpringBoot3>
 								<interfaceOnly>true</interfaceOnly>
